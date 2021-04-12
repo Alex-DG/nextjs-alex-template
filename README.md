@@ -230,7 +230,6 @@ public
   "scripts": {
 		"lint": "yarn prettier && yarn eslint",
     "prettier": "prettier --list-different '*/**/*.{js,ts,tsx,json,md}'",
-		...
   }
 }
 ```

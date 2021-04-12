@@ -4,7 +4,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 - 🆃ypescript
 - 🅴SLint + Preventing formatting errors from being committed
-- 🅿rettier
+- Prettier
 - 🅹est // TODO
 - Styled-Component // TODO
 - SEO // TODO

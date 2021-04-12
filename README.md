@@ -36,7 +36,7 @@ yarn dev
 
 **We suggest that you begin by typing:**
 
-  cd <project-name>
+  cd <your-project-name>
   yarn dev
 ```
 

@@ -5,7 +5,7 @@ import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/date'
 
-import { Post } from '../types'
+import { PostType } from '../types'
 
 export const getStaticProps = async () => {
   const allPostsData = getSortedPostsData()
@@ -17,7 +17,7 @@ export const getStaticProps = async () => {
   }
 }
 
-const Home = ({ allPostsData }: { allPostsData: Post[] }) => {
+const Home = ({ allPostsData }: { allPostsData: PostType[] }) => {
   return (
     <Layout home>
       <Head>

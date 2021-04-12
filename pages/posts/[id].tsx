@@ -3,7 +3,7 @@ import { getAllPostIds, getPostData } from '../../lib/posts'
 import Head from 'next/head'
 import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
-import { Post } from '../../types'
+import { PostType } from '../../types'
 
 export const getStaticPaths = async () => {
   const paths = getAllPostIds()
@@ -23,7 +23,7 @@ export const getStaticProps = async ({ params }) => {
   }
 }
 
-const Post = ({ postData }: { postData: Post }) => {
+const Post = ({ postData }: { postData: PostType }) => {
   return (
     <Layout>
       <Head>

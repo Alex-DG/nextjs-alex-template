@@ -3,8 +3,27 @@ import { getAllPostIds, getPostData } from '../../lib/posts'
 import Head from 'next/head'
 import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
+import { Post } from '../../types'
 
-export default function Post({ postData }) {
+export const getStaticPaths = async () => {
+  const paths = getAllPostIds()
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps = async ({ params }) => {
+  const postData = await getPostData(params.id)
+
+  return {
+    props: {
+      postData,
+    },
+  }
+}
+
+const Post = ({ postData }: { postData: Post }) => {
   return (
     <Layout>
       <Head>
@@ -12,28 +31,15 @@ export default function Post({ postData }) {
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
+
         <div className={utilStyles.lightText}>
           <Date dateString={postData.date} />
         </div>
+
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>
   )
 }
 
-export async function getStaticPaths() {
-  const paths = getAllPostIds()
-  return {
-    paths,
-    fallback: false
-  }
-}
-
-export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id)
-  return {
-    props: {
-      postData
-    }
-  }
-}
+export default Post

@@ -235,3 +235,21 @@ public
 ```
 
 The flag `--list-different` prints the filenames of files that are different from Prettier formatting. If there are differences the script errors out, which is useful in a CI scenario.
+
+Step 5: Jest
+
+- Install react-test and jest dependencies:
+
+```jsx
+
+# React testing library
+yarn add --dev @testing-library/react
+
+# Jest
+yarn add --dev jest jest-watch-typeahead @types/jest babel-jest
+
+# Other
+// For CSS modules
+yarn add --dev identity-obj-proxy
+
+```

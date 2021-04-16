@@ -164,7 +164,7 @@ touch.eslintrc.eslintignore
 ```jsx
 {
   "scripts": {
-		"lint": "eslint . --ext ts --ext tsx --ext js",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
   }
 }
 ```
@@ -226,7 +226,7 @@ public
 ```jsx
 {
   "scripts": {
-		"type-check": "tsc --pretty --noEmit", // check TS types
+    "type-check": "tsc --pretty --noEmit", // check TS types
     "format": "prettier --write .", // apply prettier throughout of your project
   }
 }
@@ -294,7 +294,5 @@ module.exports = {
   "test-all": "yarn lint && yarn type-check && yarn test"
 }
 ```
-
-From now `yarn test` will run or your test and `yarn test-all` wit run your test, linter and Typscript check.
 
 The first time this test is run with `yarn test`, Jest creates a snapshot file under `__snapshots__`.

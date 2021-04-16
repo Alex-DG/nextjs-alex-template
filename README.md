@@ -5,12 +5,12 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 - 🆃ypescript
 - 🅴SLint + Preventing formatting errors from being committed
 - Prettier
-- 🅹est // TODO
+- 🅹est
 - Styled-Component // TODO
 - SEO // TODO
 - Bonus: local network deployment // TODO
 
-## **Step 1: Project setup**
+## Step 1: Project setup
 
 - Install our sample project:
 
@@ -159,13 +159,12 @@ touch.eslintrc.eslintignore
 }
 ```
 
-- Add the ESLint fix command to your `package.json` so you will be able to run `yarn lint` to fix all files defined in your command:
+- Add the ESLint fix command to your `package.json`:
 
 ```jsx
 {
   "scripts": {
-		"lint": "yarn eslint",
-    "eslint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+		"lint": "eslint . --ext ts --ext tsx --ext js",
   }
 }
 ```
@@ -180,21 +179,20 @@ touch.eslintrc.eslintignore
 {
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run type-check"
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx,json,md}": [
-      "prettier --write" // to format the entire project
-    ],
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn format"
     ]
-  }
+  },
 }
 ```
 
-Step 4: Prettier
+## Step 4: Prettier
 
 - Add `.prettierrc` and `.prettierignore` to your project:
 
@@ -223,22 +221,20 @@ public
 }
 ```
 
-- Add a Prettier command to your `package.json` so you will be able to run `yarn lint` with both eslint and prettier throughout your project:
+- Add a Prettier command to your `package.json`:
 
 ```jsx
 {
   "scripts": {
-		"lint": "yarn prettier && yarn eslint",
-    "prettier": "prettier --list-different '*/**/*.{js,ts,tsx,json,md}'",
+		"type-check": "tsc --pretty --noEmit", // check TS types
+    "format": "prettier --write .", // apply prettier throughout of your project
   }
 }
 ```
 
-The flag `--list-different` prints the filenames of files that are different from Prettier formatting. If there are differences the script errors out, which is useful in a CI scenario.
+## Step 5: Jest
 
-Step 5: Jest
-
-- Install react-test and jest dependencies:
+- Install react-test + jest dependencies and create the jest and babel config files:
 
 ```jsx
 
@@ -252,4 +248,53 @@ yarn add --dev jest jest-watch-typeahead @types/jest babel-jest
 // For CSS modules
 yarn add --dev identity-obj-proxy
 
+# Jest config file
+touch jest.config.js
+
+# Babel config file
+touch .babelrc
+
 ```
+
+- Add the Jest config file `jest.config.js`:
+
+```jsx
+module.exports = {
+  roots: ['<rootDir>'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx'],
+  testPathIgnorePatterns: ['<rootDir>[/\\\\](node_modules|.next)[/\\\\]'],
+  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'babel-jest',
+  },
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
+  moduleNameMapper: {
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js',
+  },
+}
+```
+
+- Add the babel config file `touch .babelrc`:
+
+```jsx
+{
+  "presets": ["next/babel"]
+}
+```
+
+- Add the following in your `package.json`:
+
+```jsx
+{
+  "test": "jest",
+  "test-all": "yarn lint && yarn type-check && yarn test"
+}
+```
+
+From now `yarn test` will run or your test and `yarn test-all` wit run your test, linter and Typscript check.
+
+The first time this test is run with `yarn test`, Jest creates a snapshot file under `__snapshots__`.

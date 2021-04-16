@@ -6,21 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "yarn prettier && yarn eslint",
-    "prettier": "prettier --list-different '*/**/*.{js,ts,tsx,json}'",
-    "eslint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "type-check": "tsc --pretty --noEmit",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "test": "jest",
+    "test-all": "yarn lint && yarn type-check && yarn test"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run type-check"
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx,json,md}": [
-      "prettier --write"
-    ],
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn format"
     ]
   },
   "dependencies": {

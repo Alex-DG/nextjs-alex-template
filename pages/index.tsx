@@ -26,6 +26,15 @@ const Home = ({ allPostsData }: { allPostsData: PostType[] }) => {
 
       <section className={utilStyles.headingMd}>
         <p>{`👋 Bonjour, let's dev with Next.js!`}</p>
+
+        <button
+          onClick={() => {
+            window.alert('With typescript and Jest')
+          }}
+        >
+          Test Button
+        </button>
+
         <p>
           (This is a sample website - you’ll be building a site like this in{' '}
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)

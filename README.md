@@ -6,7 +6,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 - 🅴SLint + Preventing formatting errors from being committed
 - Prettier
 - 🅹est
-- Styled-Component // TODO
+- Styled-Components
 - SEO // TODO
 - Bonus: local network deployment // TODO
 
@@ -296,3 +296,64 @@ module.exports = {
 ```
 
 The first time this test is run with `yarn test`, Jest creates a snapshot file under `__snapshots__`.
+
+## Step 6: Styled-Components
+
+- Install `styled-components` and `babel-plugin-styled-component`:
+
+```jsx
+yarn add styled-components
+yarn add --dev babel-plugin-styled-component
+```
+
+I invite you to have a look at the official styled-components [docs](https://styled-components.com/docs/advanced), it's how they explain that setup:
+
+```
+Basically you need to add a custom pages/_document.js (if you don't have one). Then [copy the logic](https://github.com/vercel/next.js/blob/master/examples/with-styled-components/pages/_document.js) for styled-components to inject the server side rendered styles into the <head>.
+
+Refer to [our example](https://github.com/vercel/next.js/tree/master/examples/with-styled-components) in the Next.js repo for an up-to-date usage example.
+```
+
+- Once installed update `.babelrc` with the new styled-component pluging:
+
+```jsx
+{
+  "presets": ["next/babel"],
+  "plugins": [["styled-components", { "ssr": true }]]
+}
+```
+
+- Create under your page folder a new `_documents.tsx` page with this configuration:
+
+```jsx
+import Document, { DocumentContext } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
+
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        })
+
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      }
+    } finally {
+      sheet.seal()
+    }
+  }
+}
+```

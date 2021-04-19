@@ -4,6 +4,7 @@ import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import Date from '../components/date'
+import Button from '../components/styles/Button'
 
 import { PostType } from '../types'
 
@@ -27,13 +28,13 @@ const Home = ({ allPostsData }: { allPostsData: PostType[] }) => {
       <section className={utilStyles.headingMd}>
         <p>{`👋 Bonjour, let's dev with Next.js!`}</p>
 
-        <button
+        <Button
           onClick={() => {
             window.alert('With typescript and Jest')
           }}
         >
           Test Button
-        </button>
+        </Button>
 
         <p>
           (This is a sample website - you’ll be building a site like this in{' '}

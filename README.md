@@ -7,7 +7,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 - Prettier
 - 🅹est
 - Styled-Components
-- SEO // TODO
+- Header: SEO
 - Bonus: local network deployment // TODO
 
 ## Step 1: Project setup
@@ -357,3 +357,17 @@ export default class MyDocument extends Document {
   }
 }
 ```
+
+## Step 7: Header
+
+See the configuration of the Header in `config.js` with:
+
+- Recommended Meta Tags
+- Search Engine Optimization Meta Tags
+- Facebook Open Graph meta tags
+- Meta Tags for HTML pages on Mobile
+- Twitter Summary card
+
+You also should have a look to the content of `/public/icons/` to see the different compatible icons added there depending of the deviced which will open your website url.
+
+The Header configuration is then imported into `_app.tsx`, used for the whole app.
